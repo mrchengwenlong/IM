@@ -38,6 +38,7 @@ public class ClientConnectorHandler extends SimpleChannelInboundHandler<Message>
 
     private ServerAckWindow serverAckWindow;
     private ClientAckWindow clientAckWindow;
+    private String connectionId;
 
     public ClientConnectorHandler(ClientMsgListener clientMsgListener) {
         assert clientMsgListener != null;
@@ -49,7 +50,8 @@ public class ClientConnectorHandler extends SimpleChannelInboundHandler<Message>
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         this.ctx = ctx;
-        serverAckWindow = new ServerAckWindow(IdWorker.uuid(), 10, Duration.ofSeconds(5));
+        connectionId=IdWorker.uuid();
+        serverAckWindow = new ServerAckWindow(connectionId, 10, Duration.ofSeconds(5));
         clientAckWindow = new ClientAckWindow(5);
         clientMsgListener.online();
     }
@@ -77,7 +79,7 @@ public class ClientConnectorHandler extends SimpleChannelInboundHandler<Message>
     }
 
     public void writeAndFlush(Serializable connectionId, Long msgId, Message message) {
-        ServerAckWindow.offer(connectionId, msgId, message, m -> ctx.writeAndFlush(m))
+        ServerAckWindow.offer(this.connectionId, msgId, message, m -> ctx.writeAndFlush(m))
             .thenAccept(m -> clientMsgListener.hasSent(msgId))
             .exceptionally(e -> {
                 logger.error("[client] send to connector failed", e);
@@ -99,6 +101,7 @@ public class ClientConnectorHandler extends SimpleChannelInboundHandler<Message>
         public void registerParsers() {
             InternalParser internalParser = new InternalParser(3);
             internalParser.register(Internal.InternalMsg.MsgType.ACK, (m, ctx) -> serverAckWindow.ack(m));
+
             internalParser.register(Internal.InternalMsg.MsgType.ERROR, (m, ctx) ->
                 logger.error("[client] get error from connector {}", m.getMsgBody()));
 

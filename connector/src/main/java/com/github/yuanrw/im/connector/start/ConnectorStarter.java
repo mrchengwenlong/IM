@@ -55,13 +55,15 @@ public class ConnectorStarter {
 
     private static Properties getProperties() throws IOException {
         InputStream inputStream;
-        String path = System.getProperty("config");
-        if (path == null) {
-            throw new ImException("connector.properties is not defined");
-        } else {
-            inputStream = new FileInputStream(path);
-        }
-
+//        String path = System.getProperty("config");
+//        if (path == null) {
+//            throw new ImException("connector.properties is not defined");
+//        } else {
+//            inputStream = new FileInputStream(path);
+//        }
+        ClassLoader classLoader = ConnectorStarter.class.getClassLoader();
+        inputStream=classLoader.getResourceAsStream("connector.properties");
+      //  inputStream = new FileInputStream("E:\\webproject\\IM\\connector\\src\\main\\resources\\connector.properties");
         Properties properties = new Properties();
         properties.load(inputStream);
         return properties;

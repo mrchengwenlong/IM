@@ -78,7 +78,7 @@ public class ServerAckWindow {
             future.completeExceptionally(new ImException("server window is full"));
             return future;
         }
-
+        logger.debug("get send, msg: {}", id);
         ResponseCollector<Internal.InternalMsg> responseCollector = new ResponseCollector<>(sendMessage, sendFunction);
         responseCollector.send();
         responseCollectorMap.put(id, responseCollector);

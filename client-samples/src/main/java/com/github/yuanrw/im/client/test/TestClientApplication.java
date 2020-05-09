@@ -17,13 +17,11 @@ public class TestClientApplication {
     public static void main(String[] args) {
         List<TestClient> testClientList = new ArrayList<>();
         String[] usernameForTest = {
-            "Adela", "Alice", "Bella", "Cynthia", "Freda", "Honey",
-            "Irene", "Iris", "Joa", "Juliet", "Lisa", "Mandy", "Nora",
-            "Olive", "Tom", "xianyy", "yuanrw",
+            "Adela", "Alice", "Bella", "Cynthia",
         };
 
         //login all user
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 4; i++) {
             testClientList.add(new TestClient("127.0.0.1", 9081,
                 "http://127.0.0.1:8082", usernameForTest[i], "123abc"));
         }
@@ -31,7 +29,7 @@ public class TestClientApplication {
         //print test result every 5 seconds
         ScheduledExecutorService printExecutor = Executors.newScheduledThreadPool(1);
 
-        doInExecutor(printExecutor, 5, () -> {
+        doInExecutor(printExecutor, 4, () -> {
             System.out.println("\n\n");
             System.out.println(String.format("sentMsg: %d, readMsg: %d, hasSentAck: %d, " +
                     "hasDeliveredAck: %d, hasReadAck: %d, hasException: %d",

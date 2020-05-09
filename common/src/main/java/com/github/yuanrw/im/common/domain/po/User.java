@@ -8,6 +8,8 @@ package com.github.yuanrw.im.common.domain.po;
  */
 public class User extends DbModel {
 
+    private Long id;
+
     private String username;
 
     private String pwdHash;
@@ -36,5 +38,15 @@ public class User extends DbModel {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 }

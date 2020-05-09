@@ -36,7 +36,9 @@ public class DefaultUserSpiImpl implements UserSpi<UserBase> {
 
     @Override
     public UserBase getById(String id) {
-        User user = userService.getById(Long.parseLong(id));
+
+
+        User user = userService.getUserById(id);
         if (user == null) {
             return null;
         }

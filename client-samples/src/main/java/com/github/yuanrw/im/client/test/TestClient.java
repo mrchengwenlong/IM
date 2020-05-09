@@ -100,9 +100,10 @@ class TestClient {
 
     void randomSendTest() {
         sendMsg.getAndIncrement();
+        //System.out.println("size "+friends.size());
         int index = ThreadLocalRandom.current().nextInt(0, friends.size());
         String randomText = RandomStringUtils.random(20, true, true);
 
-        chatApi.text(friends.get(index).getUserId(), randomText);
+        chatApi.text("4", randomText);
     }
 }

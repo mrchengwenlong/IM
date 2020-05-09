@@ -18,7 +18,11 @@ import java.util.Properties;
  *
  * @author yrw
  */
+
 public class TransferStarter {
+
+
+
     public static TransferConfig TRANSFER_CONFIG = new TransferConfig();
     public static TransferMqProducer producer;
     static Injector injector = Guice.createInjector(new TransferModule());
@@ -64,13 +68,15 @@ public class TransferStarter {
 
     private static Properties getProperties() throws IOException {
         InputStream inputStream;
-        String path = System.getProperty("config");
-        if (path == null) {
-            throw new ImException("transfer.properties is not defined");
-        } else {
-            inputStream = new FileInputStream(path);
-        }
-
+//        String path = System.getProperty("config");
+//        if (path == null) {
+//            throw new ImException("transfer.properties is not defined");
+//        } else {
+//
+//        }
+        ClassLoader classLoader = TransferStarter.class.getClassLoader();
+        inputStream=classLoader.getResourceAsStream("transfer.properties");
+        //inputStream = new FileInputStream("E:\\webproject\\IM\\transfer\\src\\main\\resources\\transfer.properties");
         Properties properties = new Properties();
         properties.load(inputStream);
         return properties;

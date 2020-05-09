@@ -101,10 +101,10 @@ public class MyClient {
     }
 
     public void send(String id, String text) {
-        if (!friendMap.containsKey(id)) {
-            System.out.println("friend " + id + " not found!");
-            return;
-        }
+//        if (!friendMap.containsKey(id)) {
+//            System.out.println("friend " + id + " not found!");
+//            return;
+//        }
         chatApi.text(id, text);
     }
 }

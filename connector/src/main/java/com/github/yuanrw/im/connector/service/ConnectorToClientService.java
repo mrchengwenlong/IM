@@ -68,7 +68,9 @@ public class ConnectorToClientService {
     public void doChatToClientOrTransferAndFlush(Chat.ChatMsg chat) {
         boolean onTheMachine = sendMsg(chat.getDestId(), chat.getId(),
             cid -> Chat.ChatMsg.newBuilder().mergeFrom(chat).setId(IdWorker.nextId(cid)).build());
-
+        if (onTheMachine){
+            logger.info("dest onTheMachine");
+        }
         //send ack to from id
         if (onTheMachine) {
             ClientConn conn = clientConnContext.getConnByUserId(chat.getFromId());

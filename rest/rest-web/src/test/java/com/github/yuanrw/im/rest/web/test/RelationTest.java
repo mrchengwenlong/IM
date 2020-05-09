@@ -5,6 +5,7 @@ import com.github.yuanrw.im.rest.web.vo.RelationReq;
 import com.github.yuanrw.im.rest.web.vo.UserReq;
 import io.netty.util.CharsetUtil;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -79,8 +80,8 @@ public class RelationTest {
     @Test
     public void testAddNewRelation() {
         RelationReq req = new RelationReq();
-        req.setUserId1("1119861162352148481");
-        req.setUserId2("1142784917944406018");
+        req.setUserId1("1");
+        req.setUserId2("2");
 
         webClient.post().uri("/relation")
             .header("token", token)
@@ -138,5 +139,10 @@ public class RelationTest {
             .expectBody()
             .jsonPath("$.status").isEqualTo(200)
             .jsonPath("$.msg").isEqualTo("SUCCESS");
+    }
+    @Test
+    public void testEncy(){
+      String e=  RandomStringUtils.randomAlphanumeric(16) + "|" + RandomStringUtils.randomNumeric(16);
+      System.out.println(e);
     }
 }

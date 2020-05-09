@@ -19,4 +19,6 @@ public interface UserService extends IService<User> {
      * @return
      */
     User verifyAndGet(String username, String pwd);
+
+    User getUserById(String userId);
 }
